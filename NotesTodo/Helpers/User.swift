@@ -3,9 +3,10 @@ import SwiftUI
 import FirebaseAuth
 
 struct User: EnvironmentKey {
-  static var  defaultValue: Self = mock
-  var id: String
+  typealias ID = String
+  static var  defaultValue: Self = sample
+  var id: ID
 //  var email: String
   
-  static let mock: Self = User(id: "TestUser")
+  static let sample: Self = User(id: "TestUser")
 }

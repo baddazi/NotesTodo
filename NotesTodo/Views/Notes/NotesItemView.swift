@@ -1,14 +1,14 @@
 import SwiftUI
 
 struct NotesItemView: View {
-  var title: String
-  var date: Date = .now - 432000 * 2
+  @State var note: NotesTodo
+  
     var body: some View {
       HStack {
         VStack(alignment: .leading) {
-          Text(title)
+          Text(note.text.separateTitle())
             .fontWeight(.bold)
-          Text(date.notesItemFormatting())
+          Text(note.date.notesItemFormatting())
         }
         .padding(.vertical)
         .padding(.leading)
@@ -20,7 +20,7 @@ struct NotesItemView: View {
 
 struct NotesItemView_Previews: PreviewProvider {
     static var previews: some View {
-      NotesItemView(title: "Title", date: .now)
+      NotesItemView(note: .sample)
     }
 }
 

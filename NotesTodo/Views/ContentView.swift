@@ -10,7 +10,25 @@ struct ContentView: View {
       Group {
         if let user = user {
           MainView()
-            .environment(\.[key: \User.self], user)
+            .environment(\.[key: \User.self], {
+              FirebaseManager.userID = user.id
+              return user
+            }())
+            .environment(\.[key: \FirebaseManager.self].fetchNotes, {
+              return NotesTodo.samples
+            })
+            .environment(\.[key: \FirebaseManager.self].fetchNote, {_ in
+              return NotesTodo.sample
+            })
+            .environment(\.[key: \FirebaseManager.self].updateNote, { note in
+              print("update note ", note)
+            })
+            .environment(\.[key: \FirebaseManager.self].createNote, {
+              return NotesTodo(id: "id", userID: user.id, text: "", date: .now)
+            })
+            .environment(\.[key: \FirebaseManager.self].deletNote, {note in
+              print("delete note ", note)
+            })
         } else {
           WelcomeView()
         }
@@ -49,6 +67,26 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView()
+      .showErrors()
+      .environment(\.[key: \User.self], {
+        FirebaseManager.userID = User.sample.id
+        return User.sample
+      }())
+      .environment(\.[key: \FirebaseManager.self].fetchNotes, {
+        return NotesTodo.samples
+      })
+      .environment(\.[key: \FirebaseManager.self].fetchNote, {_ in
+        return NotesTodo.sample
+      })
+      .environment(\.[key: \FirebaseManager.self].updateNote, { note in
+        print("update note ", note)
+      })
+      .environment(\.[key: \FirebaseManager.self].createNote, {
+        return NotesTodo(id: "id", userID: User.sample.id, text: "", date: .now)
+      })
+      .environment(\.[key: \FirebaseManager.self].deletNote, {note in
+        print("delete note ", note)
+      })
   }
 }
 

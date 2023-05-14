@@ -41,8 +41,6 @@ extension Throw {
   }
 }
 
-
-
 extension Publisher {
   func sendErrors(to: Throw, completeOnError: Bool = true) ->  Publishers.Catch<Self, Publishers.HandleEvents<Empty<Self.Output, Never>>> {
     `catch` { error in
@@ -95,7 +93,7 @@ struct ShowErrors: ViewModifier {
   }
  
   func moveToNextError() {
-    // I do not like this. I want to bind alert with check if the array is empty but its not worked. Probably thread issue. Definitly solvable but I dont want to waste time on this. This way its work fine.
+    // I do not like this. I want to bind alert with check of empty array but its not worked. Probably thread issue. Definitly solvable but I dont want to waste time on this. This way its work fine.
      Task { @MainActor in
         self.showError = errors.showError()
       }

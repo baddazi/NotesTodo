@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ED1A609929AD4AF2003C8D58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED1A609829AD4AF2003C8D58 /* GoogleService-Info.plist */; };
-		ED1A609A29AD4AF2003C8D58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED1A609829AD4AF2003C8D58 /* GoogleService-Info.plist */; };
-		ED1A609B29AD4AF2003C8D58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED1A609829AD4AF2003C8D58 /* GoogleService-Info.plist */; };
 		ED1A609E29AD4B84003C8D58 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ED1A609D29AD4B84003C8D58 /* FirebaseAnalytics */; };
 		ED1A60A029AD4B84003C8D58 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = ED1A609F29AD4B84003C8D58 /* FirebaseAnalyticsOnDeviceConversion */; };
 		ED1A60A229AD4B84003C8D58 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ED1A60A129AD4B84003C8D58 /* FirebaseAnalyticsSwift */; };
@@ -62,6 +59,8 @@
 		ED7707FF29AD3C08009AB601 /* NotesTodoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7707FE29AD3C08009AB601 /* NotesTodoUITestsLaunchTests.swift */; };
 		EDB9FDDE29FEAFD400661597 /* NotesTodo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB9FDDD29FEAFD400661597 /* NotesTodo.swift */; };
 		EDB9FDE029FEB00F00661597 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB9FDDF29FEB00F00661597 /* Extensions.swift */; };
+		EDDD01982A0A5D6300F4A6FC /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDD01972A0A5D6300F4A6FC /* FirebaseManager.swift */; };
+		EDDD019A2A0DB8B400F4A6FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDDD01992A0DB8B400F4A6FC /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +81,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		ED1A609829AD4AF2003C8D58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED1A60D329AD4FD7003C8D58 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		ED1A60D729AD4FEF003C8D58 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		ED1A60DB29AD4FFD003C8D58 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -107,6 +105,8 @@
 		ED7707FE29AD3C08009AB601 /* NotesTodoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTodoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		EDB9FDDD29FEAFD400661597 /* NotesTodo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTodo.swift; sourceTree = "<group>"; };
 		EDB9FDDF29FEB00F00661597 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		EDDD01972A0A5D6300F4A6FC /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		EDDD01992A0DB8B400F4A6FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +206,7 @@
 		ED7707D429AD3C07009AB601 = {
 			isa = PBXGroup;
 			children = (
-				ED1A609829AD4AF2003C8D58 /* GoogleService-Info.plist */,
+				EDDD01992A0DB8B400F4A6FC /* GoogleService-Info.plist */,
 				ED7707DF29AD3C08009AB601 /* NotesTodo */,
 				ED7707F129AD3C08009AB601 /* NotesTodoTests */,
 				ED7707FB29AD3C08009AB601 /* NotesTodoUITests */,
@@ -227,6 +227,7 @@
 		ED7707DF29AD3C08009AB601 /* NotesTodo */ = {
 			isa = PBXGroup;
 			children = (
+				EDDD01962A0A5D0B00F4A6FC /* Services */,
 				EDB9FDDC29FEAFBE00661597 /* Model */,
 				ED32460429BB674F008790B2 /* Helpers */,
 				ED1A60D129AD4FA7003C8D58 /* Views */,
@@ -269,6 +270,14 @@
 				EDB9FDDD29FEAFD400661597 /* NotesTodo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EDDD01962A0A5D0B00F4A6FC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EDDD01972A0A5D6300F4A6FC /* FirebaseManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,7 +417,7 @@
 			files = (
 				ED7707E929AD3C08009AB601 /* Preview Assets.xcassets in Resources */,
 				ED7707E529AD3C08009AB601 /* Assets.xcassets in Resources */,
-				ED1A609929AD4AF2003C8D58 /* GoogleService-Info.plist in Resources */,
+				EDDD019A2A0DB8B400F4A6FC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +425,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED1A609A29AD4AF2003C8D58 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +432,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED1A609B29AD4AF2003C8D58 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +454,7 @@
 				EDB9FDDE29FEAFD400661597 /* NotesTodo.swift in Sources */,
 				EDB9FDE029FEB00F00661597 /* Extensions.swift in Sources */,
 				ED32460E29C26C19008790B2 /* NotesItemView.swift in Sources */,
+				EDDD01982A0A5D6300F4A6FC /* FirebaseManager.swift in Sources */,
 				ED32461129C29181008790B2 /* NotesDetailView.swift in Sources */,
 				ED32460829C0BC35008790B2 /* SimpleError.swift in Sources */,
 				ED32460C29C10FF8008790B2 /* User.swift in Sources */,
