@@ -6,12 +6,12 @@ struct NotesDetailView: View {
   @State var note: NotesTodo
   
   var body: some View {
-    VStack() {
-      TextEditor(text: $note.text)       
-        .padding()
-      Spacer()
+    VStack(spacing: 0) {
+      TextEditor(text: $note.text)
     }
-    .background(Color.red)
+    .padding()
+    .navigationBarTitleDisplayMode(.inline)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .onChange(of: note.text) { _ in
       `throw`.try {
         try firebaseManager.updateNote(note)

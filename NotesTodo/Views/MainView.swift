@@ -17,27 +17,7 @@ struct MainView: View {
   
   var body: some View {
     NavigationStack {
-      VStack {
-        ZStack {
-          ScrollView {
-            searchField
-            notesItems
-              .redacted(reason: isLoading ? .placeholder : .init())
-          }
-          VStack {
-            Spacer()
-            Button{ createNote() } label: {
-              if isCreatingNote {
-                ProgressView()
-              }
-              else {
-                Image(systemName: "square.and.pencil")
-              }
-            }
-            .disabled(isCreatingNote)
-          }
-        }
-      }
+      notesList
       .task {
         let _ = `throw`.task {
           notes = try await firebaseManager.fetchNotes()
@@ -59,6 +39,18 @@ struct MainView: View {
       .navigationTitle("Notes")
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
+          Button { createNote() } label: {
+            if isCreatingNote {
+              ProgressView()
+            }
+            else {
+              Image(systemName: "square.and.pencil")
+            }
+          }
+          .disabled(isCreatingNote)
+        }
+        
+        ToolbarItem(placement: .navigationBarTrailing) {
           Menu {
             Button("Sign out", action: signOut)
             Button("Test errors", action: testError)
@@ -67,41 +59,52 @@ struct MainView: View {
           }
         }
       }
-      .padding()
     }
   }
   
   @ViewBuilder
-  var notesItems: some View {
-    Group {
-      if notes.isEmpty {
-        Text("No notes")
+  var notesList: some View {
+    let filteredNotes = search.count == 0 ? notes : notes.filter{ $0.text.includeCaseInsesitive(search) }
+      List {
+        Section(header: EmptyView(), footer: EmptyView()) {
+          searchField
+            .listRowInsets(EdgeInsets())
+        }
+        .listRowBackground(
+          RoundedRectangle(cornerRadius: 0)
+            .fill(Color.clear)
+        )
+        if !isLoading {
+          listItems(filteredNotes: filteredNotes)
+        }
       }
-      else {
-        individualNotes
+      .overlay {
+        if isLoading || filteredNotes.isEmpty {
+          edgeCases
+        }
       }
-    }
-    .background(
-      Color("ItemBackground")
-        .cornerRadius(10)
-    )
   }
   
   @ViewBuilder
-  var individualNotes: some View {
-    let filteredValues = search.count == 0 ? notes : notes.filter{ $0.text.contains(search) }
-    
-    VStack(spacing: 0) {
-      ForEach(Array(filteredValues.enumerated()), id: \.1) { index, note in
-        NavigationLink(value: note) {
-          NotesItemView(note: note)
-        }
-        .foregroundColor(Color.black)
-        if index != notes.count - 1 {
-          Divider()
-        }
+  var edgeCases: some View {
+    if isLoading {
+     ProgressView()
+    } else if notes.isEmpty {
+      Text("Notes are empty")
+    } else {
+      Text("No search results")
+    }
+  }
+  
+  @ViewBuilder
+  func listItems(filteredNotes: [NotesTodo]) -> some View {
+    let filteredAndSortedNotes = filteredNotes.sorted(by: { $0.date > $1.date })
+    ForEach(filteredAndSortedNotes) { note in
+      NavigationLink(value: note) {
+        NotesItemView(note: note)
       }
     }
+    .onDelete(perform: delete)
   }
   
   var searchField: some View {
@@ -145,15 +148,22 @@ struct MainView: View {
     }
   }
   
+  private func delete(at offsets: IndexSet) {
+    `throw`.try {
+      guard let index = offsets.first else { throw SimpleError("Unable to delete note")}
+      try firebaseManager.deletNote(notes[index])
+      notes.remove(atOffsets: offsets)
+    }
+  }
+  
   private func createNote() {
     let _  = `throw`.task {
       isCreatingNote = true
       defer {
         isCreatingNote = false
       }
-     let note = try await firebaseManager.createNote()
-      notes.append(note)
-      newNote = note      
+      let note = try await firebaseManager.createNote()
+      newNote = note
     }
   }
 }

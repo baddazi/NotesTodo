@@ -13,4 +13,10 @@ extension String {
     
     return title
   }
+  
+  func includeCaseInsesitive(_ secondValue: String) -> Bool {
+    let options: String.CompareOptions = [.caseInsensitive, .diacriticInsensitive]
+    guard let _ = self.range(of: secondValue, options: options) else { return false }
+    return true
+  }
 }

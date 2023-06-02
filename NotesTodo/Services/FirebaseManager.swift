@@ -16,8 +16,8 @@ struct FirebaseManager {
       let note = try rawNote.data(as: NotesTodo.self)
       notes.append(note)
     }
-    
-    return notes.filter({ $0.id == userID })
+
+    return notes.filter({ $0.userID == userID })
   }
   
   var fetchNote: (NotesTodo.ID) async throws -> NotesTodo = { id in
