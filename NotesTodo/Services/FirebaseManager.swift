@@ -1,4 +1,4 @@
-import Firebase
+import FirebaseFirestore
 import FirebaseAuth
 import Combine
 import FirebaseFirestoreSwift
