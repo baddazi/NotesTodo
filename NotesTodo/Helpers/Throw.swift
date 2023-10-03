@@ -55,49 +55,39 @@ struct ShowErrors: ViewModifier {
           showError = true
         }
       })
-      .alert(isPresented: $showError)
-    {
-      if errors.count == 1 {
-        return Alert(
-          title: Text("Error"),
-          message: Text(errors.first!.localizedDescription),
-          dismissButton: .cancel({ errors = [] })
-        )
-      }
-      else {
-        return Alert(
-          title: Text("\(errors.count) Errors occurred"),
-          message: Text(errors.first!.localizedDescription),
-          primaryButton: .destructive(
-            Text("Hide all"),
-            action: { errors = [] }
-          ),
-          secondaryButton: .default(
-            Text("Move to next Error"),
-            action: { moveToNextError() }
-          )
-        )
-      }
-    }
-  }
-  
-  func moveToNextError() {
-    Task { @MainActor in
-      self.showError = errors.showError()
-    }
+      .alert(errors.count > 1 ? "\(errors.count) Errors" : "Error", isPresented:  Binding<Bool> {
+        !errors.isEmpty
+      } set: { _ in
+      }, actions: {
+          if errors.count == 1 {
+            Button {
+              errors.removeFirst()
+            } label: {
+              Text("Cancel")
+            }
+               }
+               else {
+                 Button(role: .destructive) {
+                   errors = []
+                 } label: {
+                   Text("Clear all errors")
+                 }
+                 
+                 Button {
+                   errors.removeFirst()
+                 } label: {
+                   Text("Move to next Error")
+                 }
+               }
+      }, message: {
+        Text(errors.first?.localizedDescription ?? "")
+      })
   }
 }
 
 extension View {
   func showErrors() -> some View {
     modifier(ShowErrors())
-  }
-}
-
-extension Array where Element: Error {
-  mutating func showError() -> Bool {
-    self.removeFirst()
-    return !self.isEmpty
   }
 }
 

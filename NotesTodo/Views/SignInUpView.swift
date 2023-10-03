@@ -165,7 +165,6 @@ struct SignInUpView: View {
         throw SimpleError("Email and passwords need to be filled")
       }
       _ = try await Auth.auth().createUser(withEmail: email, password: password)
-      
     }
   }
   
